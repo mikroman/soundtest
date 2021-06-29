@@ -1,4 +1,6 @@
-* = $2000
+#import "os.asm"
+
+* = $2000   //build.asm at $2000
 start:
 
   jsr sound_init
@@ -14,15 +16,15 @@ sound_init:
 {
   // define envelope
   lda #$08
-  ldx mod(envelope,256)
-  ldy #envelope / 256
+  ldx #>envelope
+  ldy #<envelope
   jsr osword
 
   // set up event handler
   sei
-  lda mod(eventv_handler,256)
+  lda #>eventv_handler
   sta evntv
-  lda #eventv_handler/256
+  lda #<eventv_handler
   sta evntv+1
   cli
 
@@ -102,8 +104,8 @@ sound_play_note:
   sta soundparams+6
 
   // set pointer to sound params in xy
-  ldx  mod (soundparams,256)
-  ldy #soundparams / 256
+  ldx #>soundparams
+  ldy #<soundparams
 
   // action os sound function
   lda #$07
@@ -140,7 +142,6 @@ soundparams:
 // melody data
 melody:
 .import binary "melody.beeb"
-#import "os.asm"
 //end:
 
 //save "sounds", start, end
