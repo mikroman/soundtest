@@ -1,132 +1,132 @@
-; OS function vectors
+// os function vectors
 
-USERV = &0200
-BRKV = &0202
-IRQ1V = &0204
-IRQ2V = &0206
-CLIV = &0208
-BYTEV = &020A
-WORDV = &020C
-WRCHV = &020E
-RDCHV = &0210
-FILEV = &0212
-ARGSV = &0214
-BGETV = &0216
-BPUTV = &0218
-GBPBV = &021A
-FINDV = &021C
-FSCV = &021E
-EVNTV = &0220
-UPTV = &0222
-NETV = &0224
-VDUV = &0226
-KEYV = &0228
-INSBV = &022A
-REMVB = &022C
-CNPV = &022E
-IND1V = &0230
-IND2V = &0232
-IND3V = &0234
+.label userv = $0200
+.label brkv = $0202
+.label irq1v = $0204
+.label irq2v = $0206
+.label cliv = $0208
+.label bytev = $020a
+.label wordv = $020c
+.label wrchv = $020e
+.label rdchv = $0210
+.label filev = $0212
+.label argsv = $0214
+.label bgetv = $0216
+.label bputv = $0218
+.label gbpbv = $021a
+.label findv = $021c
+.label fscv = $021e
+.label evntv = $0220
+.label uptv = $0222
+.label netv = $0224
+.label vduv = $0226
+.label keyv = $0228
+.label insbv = $022a
+.label remvb = $022c
+.label cnpv = $022e
+.label ind1v = $0230
+.label ind2v = $0232
+.label ind3v = $0234
 
-; OS function call locations
+// os function call locations
 
-OSFSC  = &F1B1 ; filing system control (entry via FSCV)
+.label osfsc  = $f1b1 // filing system control (entry via fscv)
 
-OSWRSC = &FFB3 ; write byte to screen
-OSRDSC = &FFB9 ; read byte from screen
+.label oswrsc = $ffb3 // write byte to screen
+.label osrdsc = $ffb9 // read byte from screen
 
-OSNULL = &FFA6 ; blank function handler (just an RTS)
+.label osnull = $ffa6 // blank function handler (just an rts)
 
-VDUCHR = &FFBC ; VDU character output
-OSEVEN = &FFBF ; generate an EVENT
-GSINIT = &FFC2 ; initialise OS string
-GSREAD = &FFC5 ; read character from input stream
-NVRDCH = &FFC8 ; non vectored OSRDCH
-NVWRCH = &FFCB ; non vectored OSWRCH
-OSFIND = &FFCE ; open or close a file
-OSGBPB = &FFD1 ; transfer block to or from a file (get block / put block)
-OSBPUT = &FFD4 ; save a byte to file
-OSBGET = &FFD7 ; get a byte from file
-OSARGS = &FFDA ; read or write file attributes
-OSFILE = &FFDD ; read or write a complete file
-OSRDCH = &FFE0 ; get a byte from current input stream
-OSASCI = &FFE3 ; output a byte to VDU stream expanding CR (&0D) to LF/CR (&0A,&0D)
-OSNEWL = &FFE7 ; output a LF/CR to VDU stream
-OSWRCH = &FFEE ; output a character to the VDU stream
-OSWORD = &FFF1 ; perform operation using parameter table
-OSBYTE = &FFF4 ; perform operation on single byte
-OSCLI  = &FFF7 ; pass string to command line interpreter
+.label vduchr = $ffbc // vdu character output
+.label oseven = $ffbf // generate an event
+.label gsinit = $ffc2 // initialise os string
+.label gsread = $ffc5 // read character from input stream
+.label nvrdch = $ffc8 // non vectored osrdch
+.label nvwrch = $ffcb // non vectored oswrch
+.label osfind = $ffce // open or close a file
+.label osgbpb = $ffd1 // transfer block to or from a file (get block / put block)
+.label osbput = $ffd4 // save a byte to file
+.label osbget = $ffd7 // get a byte from file
+.label osargs = $ffda // read or write file attributes
+.label osfile = $ffdd // read or write a complete file
+.label osrdch = $ffe0 // get a byte from current input stream
+.label osasci = $ffe3 // output a byte to vdu stream expanding cr ($0d) to lf/cr ($0a,$0d)
+.label osnewl = $ffe7 // output a lf/cr to vdu stream
+.label oswrch = $ffee // output a character to the vdu stream
+.label osword = $fff1 // perform operation using parameter table
+.label osbyte = $fff4 // perform operation on single byte
+.label oscli  = $fff7 // pass string to command line interpreter
 
-; System hardware
+// system hardware
 
-FREDBASE = &FC00 ; memory mapped hardware
+.label fredbase = $fc00 // memory mapped hardware
 
-JIMBASE = &FD00 ; 64K paged memory
+.label jimbase = $fd00 // 64k paged memory
 
-SHEILABASE = &FE00 ; system peripherals
-; 6845 CRTC
-CRTC00 = SHEILABASE+&00 ; address register (5 bit)
-CRTC01 = SHEILABASE+&01 ; data register
-; 6850 ACIA
-ACIA08 = SHEILABASE+&08
-ACIA09 = SHEILABASE+&09
-ACIA0A = SHEILABASE+&0A
-ACIA0B = SHEILABASE+&0B
-ACIA0C = SHEILABASE+&0C
-ACIA0D = SHEILABASE+&0D
-ACIA0E = SHEILABASE+&0E
-ACIA0F = SHEILABASE+&0F
-; Serial ULA
-; Video ULA
-ULA_VID20 = SHEILABASE+&20 ; video control register
-ULA_VID21 = SHEILABASE+&21 ; colour palette
-; Paged ROM selector
-PAGEROM = SHEILABASE+&30 ; paged ROM select (4 bit)
-; 6522 System VIA
-; 6522 User/Printer VIA
-; 8271 FDC
-FDC_STATUS = SHEILABASE+&80
-FDC_RESULT = SHEILABASE+&81
-FDC_COMMAND = SHEILABASE+&80
-FDC_PARAM = SHEILABASE+&81
-FDC_RESET = SHEILABASE+&82
-FDC_DATA = SHEILABASE+&84
-; 68B54 Econet
-; uPD7002 ADC
-; Tube ULA
+.label sheilabase = $fe00 // system peripherals
+// 6845 crtc
+.label crtc00 = sheilabase+$00 // address register (5 bit)
+.label crtc01 = sheilabase+$01 // data register
+// 6850 acia
+.label acia08 = sheilabase+$08
+.label acia09 = sheilabase+$09
+.label acia0a = sheilabase+$0a
+.label acia0b = sheilabase+$0b
+.label acia0c = sheilabase+$0c
+.label acia0d = sheilabase+$0d
+.label acia0e = sheilabase+$0e
+.label acia0f = sheilabase+$0f
+// serial ula
+// video ula
+.label ula_vid20 = sheilabase+$20 // video control register
+.label ula_vid21 = sheilabase+$21 // colour palette
+// paged rom selector
+.label pagerom = sheilabase+$30 // paged rom select (4 bit)
+// 6522 system via
+// 6522 user/printer via
+// 8271 fdc
+.label fdc_status = sheilabase+$80
+.label fdc_result = sheilabase+$81
+.label fdc_command = sheilabase+$80
+.label fdc_param = sheilabase+$81
+.label fdc_reset = sheilabase+$82
+.label fdc_data = sheilabase+$84
+// 68b54 econet
+// upd7002 adc
+// tube ula
 
-; Other constants
+// other constants
 
-MODE0BASE = &3000
-MODE1BASE = &3000
-MODE2BASE = &3000
-MODE3BASE = &4000
-MODE4BASE = &5800
-MODE5BASE = &5800
-MODE6BASE = &6000
-MODE7BASE = &7C00
-ROMSBASE = &8000
+.label mode0base = $3000
+.label mode1base = $3000
+.label mode2base = $3000
+.label mode3base = $4000
+.label mode4base = $5800
+.label mode5base = $5800
+.label mode6base = $6000
+.label mode7base = $7c00
+.label romsbase = $8000
 
-; Zero page availibility
-; &00 to &6F - available to machine code programs not using BASIC
-; &70 to &8F - reserved by BASIC for the user
+// zero page availibility
+// $00 to $6f - available to machine code programs not using basic
+// $70 to $8f - reserved by basic for the user
 
-; Colours in mode 1
-;
-; Default logical colours :
-;
-; 0 black (0)
-; 1 red (1)
-; 2 yellow (3)
-; 3 white (7)
-;
-; Actual colours :
-;
-; 0 black
-; 1 red
-; 2 green
-; 3 yellow
-; 4 blue
-; 5 magenta
-; 6 cyan
-; 7 white
+// colours in mode 1
+//
+// default logical colours :
+//
+// 0 black (0)
+// 1 red (1)
+// 2 yellow (3)
+// 3 white (7)
+//
+// actual colours :
+//
+// 0 black
+// 1 red
+// 2 green
+// 3 yellow
+// 4 blue
+// 5 magenta
+// 6 cyan
+// 7 white

@@ -1,2 +1,8 @@
 # SSD file
 *.ssd
+bin/ByteDump.txt
+bin/Program.bin
+bin/Program.dbg
+bin/sounds.sym
+BAT/.source.txt
+.gitignore
