@@ -1,6 +1,6 @@
 #import "os.asm"
 
-* = $2000   //build.asm at $2000
+* = $2000  "main" //build.asm at $2000
 start:
 
   jsr sound_init
@@ -16,15 +16,15 @@ sound_init:
 {
   // define envelope
   lda #$08
-  ldx #>envelope
-  ldy #<envelope
+  ldx #<envelope
+  ldy #>envelope
   jsr osword
 
-  // set up event handler
+  // set up event handler 
   sei
-  lda #>eventv_handler
-  sta evntv
   lda #<eventv_handler
+  sta evntv
+  lda #>eventv_handler
   sta evntv+1
   cli
 
@@ -32,7 +32,6 @@ sound_init:
   lda #$0e
   ldx #$04
   jsr osbyte
-
   rts
 
 envelope:
@@ -104,8 +103,8 @@ sound_play_note:
   sta soundparams+6
 
   // set pointer to sound params in xy
-  ldx #>soundparams
-  ldy #<soundparams
+  ldx #<soundparams
+  ldy #>soundparams
 
   // action os sound function
   lda #$07
