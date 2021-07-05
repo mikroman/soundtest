@@ -1,6 +1,6 @@
 #import "os.asm"
 
-* = $2000  "main" //build.asm at $2000
+* = $1900  "main" //build.asm at $1900
 start:
 
   jsr sound_init
